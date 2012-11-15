@@ -1,0 +1,16 @@
+{
+    "name": "xamin/minify",
+    "description": "Minifier library from minify",
+    "authors": [
+        {
+            "name": "Fzerorubigd",
+            "email": "fzerorubigd@gmail.com"
+        }
+    ],
+    "require": {
+
+    },
+    "autoload": {
+        "classmap": ["src/"]
+    }
+}
