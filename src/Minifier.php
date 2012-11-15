@@ -71,10 +71,10 @@ class Minifier
       */
      static public function initialize()
      {
-         if (self::initialized) {
+         if (self::$initialized) {
              return;
          }
-         self::initialized = true;
+         self::$initialized = true;
          //Add Minify path to search path. so there is no need to strip require_once codes
          /**set_include_path(
              get_include_path() . PATH_SEPARATOR 
