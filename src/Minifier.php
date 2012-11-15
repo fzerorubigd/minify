@@ -280,9 +280,3 @@ class Minifier
     }
     
 }
-
-/** 
-I hate global code :( But in this case its ok
-**/
-
-Xamin_Minifier::initialize();
