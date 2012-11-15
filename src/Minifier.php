@@ -148,7 +148,7 @@ class Minifier
 		foreach(self::$CSS as $file)
 			$result .= "\t\t<link rel=\"stylesheet\" href=\"" . self::$BASE_PATH . '/' . $file  . "\" type=\"text/css\" />" . PHP_EOL;
         if (count(self::$inlineCSS)) {
-            $result .= "\t\t<style type=\"text/css\""> . implode(PHP_EOL . self::$inlineCSS) . "</style>";
+            $result .= "\t\t<style type=\"text/css\">". implode(PHP_EOL . self::$inlineCSS) . "</style>";
         }
 		return $result;
 	}
@@ -165,7 +165,7 @@ class Minifier
 		foreach(self::$standaloneJS as $file)
 			$result .= "\t\t<script src=\"" . self::$BASE_PATH . '/' . $file . "\" type=\"text/javascript\"></script>" . PHP_EOL;		
         if (count(self::$inlineJS)) {
-            $result .= "\t\t<script type=\"text/javascript\""> . implode(PHP_EOL . self::$inlineJS) . "</script>";
+            $result .= "\t\t<script type=\"text/javascript\">" . implode(PHP_EOL . self::$inlineJS) . "</script>";
         }
 
 		return $result;
@@ -190,7 +190,7 @@ class Minifier
         if (count(self::$inlineCSS)) {
             require_once('Minify/CSS/Compressor.php');
             $tmp = Minify_CSS_Compressor::process(implode(PHP_EOL . self::$inlineCSS));
-            $result .= "\t\t<style type=\"text/css\""> . $tmp . "</style>";
+            $result .= "\t\t<style type=\"text/css\">" . $tmp . "</style>";
         }
 	}
 
@@ -216,7 +216,7 @@ class Minifier
         if (count(self::$inlineJS)) {
             require_once("JSMin.php");
             $tmp = JSMin::min(implode(PHP_EOL . self::$inlineJS));
-            $result .= "\t\t<script type=\"text/javascript\""> . $tmp . "</script>";
+            $result .= "\t\t<script type=\"text/javascript\">" . $tmp . "</script>";
         }
 		return $result;
 	}
