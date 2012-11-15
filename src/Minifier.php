@@ -192,6 +192,7 @@ class Minifier
             $tmp = Minify_CSS_Compressor::process(implode(PHP_EOL . self::$inlineCSS));
             $result .= "\t\t<style type=\"text/css\">" . $tmp . "</style>";
         }
+        return $result;
 	}
 
 	/**
