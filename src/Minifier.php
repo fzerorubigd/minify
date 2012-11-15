@@ -147,8 +147,8 @@ class Minifier
 		$result = PHP_EOL;
 		foreach(self::$CSS as $file)
 			$result .= "\t\t<link rel=\"stylesheet\" href=\"" . self::$BASE_PATH . '/' . $file  . "\" type=\"text/css\" />" . PHP_EOL;
-        if (count(self::inlineCSS)) {
-            $result .= "\t\t<style type=\"text/css\""> . implode(PHP_EOL . self::inlineCSS) . "</style>";
+        if (count(self::$inlineCSS)) {
+            $result .= "\t\t<style type=\"text/css\""> . implode(PHP_EOL . self::$inlineCSS) . "</style>";
         }
 		return $result;
 	}
@@ -164,8 +164,8 @@ class Minifier
 			$result .= "\t\t<script src=\"" . self::$BASE_PATH . '/' . $file . "\" type=\"text/javascript\"></script>" . PHP_EOL;
 		foreach(self::$standaloneJS as $file)
 			$result .= "\t\t<script src=\"" . self::$BASE_PATH . '/' . $file . "\" type=\"text/javascript\"></script>" . PHP_EOL;		
-        if (count(self::inlineJS)) {
-            $result .= "\t\t<script type=\"text/javascript\""> . implode(PHP_EOL . self::inlineJS) . "</script>";
+        if (count(self::$inlineJS)) {
+            $result .= "\t\t<script type=\"text/javascript\""> . implode(PHP_EOL . self::$inlineJS) . "</script>";
         }
 
 		return $result;
@@ -187,9 +187,9 @@ class Minifier
 		if(!empty($files)) {
             $result .= PHP_EOL . "\t\t<link rel=\"stylesheet\" href=\"" . self::$BASE_PATH . self::$MINIFY_PATH . '?f=' . implode(',', $files) . "\" type=\"text/css\" />" . PHP_EOL;
         }
-        if (count(self::inlineCSS)) {
+        if (count(self::$inlineCSS)) {
             require_once('Minify/CSS/Compressor.php');
-            $tmp = Minify_CSS_Compressor::process(implode(PHP_EOL . self::inlineCSS));
+            $tmp = Minify_CSS_Compressor::process(implode(PHP_EOL . self::$inlineCSS));
             $result .= "\t\t<style type=\"text/css\""> . $tmp . "</style>";
         }
 	}
@@ -213,9 +213,9 @@ class Minifier
         }
 		foreach(self::$standaloneJS as $file)
 			$result .= "\t\t<script src=\"" . self::$BASE_PATH . '/' . $file . "\" type=\"text/javascript\"></script>" . PHP_EOL;
-        if (count(self::inlineJS)) {
+        if (count(self::$inlineJS)) {
             require_once("JSMin.php");
-            $tmp = JSMin::min(implode(PHP_EOL . self::inlineJS));
+            $tmp = JSMin::min(implode(PHP_EOL . self::$inlineJS));
             $result .= "\t\t<script type=\"text/javascript\""> . $tmp . "</script>";
         }
 		return $result;
@@ -227,10 +227,10 @@ class Minifier
      */
 	static public function cssCaptureStart() 
 	{
-        if (self::nestedLevel != 0) {
+        if (self::$nestedLevel != 0) {
             throw new Exception('Capture already started.');
         }
-        self::nestedLevel = 1;
+        self::$nestedLevel = 1;
         ob_start();
 	}
 
@@ -241,12 +241,12 @@ class Minifier
 
     static public function cssCaptureEnd() 
     {
-        if (self::nestedLevel != 1) {
+        if (self::$nestedLevel != 1) {
             throw new Exception("Captire not started");
         }
-        self::nestedLevel = 0;
+        self::$nestedLevel = 0;
         $data = ob_get_clean();
-        self::inlineCSS[] = $data;
+        self::$inlineCSS[] = $data;
         return $data;
     }
 
@@ -256,10 +256,10 @@ class Minifier
      */
 	static public function jsCaptureStart() 
 	{
-        if (self::nestedLevel != 0) {
+        if (self::$nestedLevel != 0) {
             throw new Exception('Capture already started.');
         }
-        self::nestedLevel = 2;
+        self::$nestedLevel = 2;
         ob_start();
 	}
 
@@ -270,12 +270,12 @@ class Minifier
 
     static public function jsCaptureEnd() 
     {
-        if (self::nestedLevel != 2) {
+        if (self::$nestedLevel != 2) {
             throw new Exception("Captire not started");
         }
-        self::nestedLevel = 0;
+        self::$nestedLevel = 0;
         $data = ob_get_clean();
-        self::inlineJS[] = $data;
+        self::$inlineJS[] = $data;
         return $data;
     }
     
