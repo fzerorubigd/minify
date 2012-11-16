@@ -82,10 +82,10 @@ class Minify_Cache_File {
             $fp = fopen($this->_path . '/' . $id, 'rb');
             flock($fp, LOCK_SH);
             while( (!feof($fp)) && (connection_status()==0)) {
-	            print(fread($file, 1024*8));
+	            print(fread($fp, 1024*8));
 	            flush();
             }	            
-//fpassthru($fp);
+			//fpassthru($fp); //Some idiot hosts block this function
 
             flock($fp, LOCK_UN);
             fclose($fp);
